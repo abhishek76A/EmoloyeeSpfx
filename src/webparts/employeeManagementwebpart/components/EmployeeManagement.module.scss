@@ -1,0 +1,46 @@
+.employeeManagementContainer {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border: 1px solid #e1e1e1;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .employeeManagementContainer h2 {
+    text-align: center;
+    color: #333333;
+    margin-bottom: 20px;
+  }
+  
+  .inputRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 15px;
+  }
+  
+  .inputRow .ms-TextField,
+  .inputRow .ms-Dropdown,
+  .inputRow .ms-DatePicker {
+    flex: 1 1 calc(50% - 20px);
+    min-width: 200px;
+  }
+  
+  .fullWidth {
+    flex: 1 1 100%;
+  }
+  
+  .ms-PeoplePicker {
+    margin-bottom: 15px;
+  }
+  
+  .ms-PrimaryButton {
+    display: block;
+    width: 100%;
+    max-width: 200px;
+    margin: 20px auto 0;
+  }
+  

@@ -1,0 +1,40 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "employee-management-client-side-solution",
+    "id": "c7aa1977-a4fc-4959-a7db-cd58cd366584",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "developer": {
+      "name": "",
+      "websiteUrl": "",
+      "privacyUrl": "",
+      "termsOfUseUrl": "",
+      "mpnId": "Undefined-1.20.0"
+    },
+    "metadata": {
+      "shortDescription": {
+        "default": "EmployeeManagement description"
+      },
+      "longDescription": {
+        "default": "EmployeeManagement description"
+      },
+      "screenshotPaths": [],
+      "videoUrl": "",
+      "categories": []
+    },
+    "features": [
+      {
+        "title": "employee-management Feature",
+        "description": "The feature that activates elements of the employee-management solution.",
+        "id": "9e4c75b1-2361-4016-b2a9-64049f2d9707",
+        "version": "1.0.0.0"
+      }
+    ]
+  },
+  "paths": {
+    "zippedPackage": "solution/employee-management.sppkg"
+  }
+}

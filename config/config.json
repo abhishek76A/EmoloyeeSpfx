@@ -1,0 +1,19 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "employee-managementwebpart-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/employeeManagementwebpart/EmployeeManagementwebpartWebPart.js",
+          "manifest": "./src/webparts/employeeManagementwebpart/EmployeeManagementwebpartWebPart.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {},
+  "localizedResources": {
+    "EmployeeManagementwebpartWebPartStrings": "lib/webparts/employeeManagementwebpart/loc/{locale}.js",
+    "ControlStrings": "node_modules/@pnp/spfx-controls-react/lib/loc/{locale}.js"
+  }
+}
