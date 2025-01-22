@@ -1,19 +1,21 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
-import { TextField, Dropdown, PrimaryButton, DatePicker, IDropdownOption } from '@fluentui/react';
+import {
+  TextField,
+  Dropdown,
+  PrimaryButton,
+  DatePicker,
+  IDropdownOption,
+} from '@fluentui/react';
 import { PeoplePicker, PrincipalType } from '@pnp/spfx-controls-react/lib/controls/peoplepicker';
 import { SPFI } from '@pnp/sp';
 import { getSP } from '../../../pnpjsConfig';
 import '@pnp/sp/webs';
 import '@pnp/sp/lists';
 import '@pnp/sp/items';
-import { spfx } from '@pnp/spfx';
-import { IPersonaProps } from '@fluentui/react';
 import { IEmployeeManagementProps } from './IEmployeeManagementProps';
 
-// Step 1: Define the interface for employee data.
 interface EmployeeData {
-  title: string;
   employeeName: string;
   employeeId: string;
   contactInfo: string;
@@ -27,7 +29,6 @@ interface EmployeeData {
 const EmployeeManagement: React.FC<IEmployeeManagementProps> = ({ context }) => {
   const [sp, setSP] = useState<SPFI | null>(null);
   const [employeeData, setEmployeeData] = useState<EmployeeData>({
-    title: '',
     employeeName: '',
     employeeId: '',
     contactInfo: '',
@@ -53,17 +54,22 @@ const EmployeeManagement: React.FC<IEmployeeManagementProps> = ({ context }) => 
   useEffect(() => {
     const spInstance = getSP(context);
     setSP(spInstance);
+
+    // Cleanup function to avoid memory leaks
+    return () => {
+      setSP(null);
+    };
   }, [context]);
 
   const handleInputChange = (
     e: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
     newValue?: string
-  ): void => { // Added return type 'void'
+  ): void => {
     const { name } = e.currentTarget;
     setEmployeeData((prev) => ({ ...prev, [name]: newValue || '' }));
   };
 
-  const handlePeoplePicker = (items: IPersonaProps[]): void => { // Added return type 'void'
+  const handlePeoplePicker = (items: { secondaryText?: string }[]): void => {
     if (items.length > 0) {
       setEmployeeData((prev) => ({
         ...prev,
@@ -72,15 +78,14 @@ const EmployeeManagement: React.FC<IEmployeeManagementProps> = ({ context }) => 
     }
   };
 
-  const saveEmployee = async (): Promise<void> => { // Added return type 'Promise<void>'
+  const saveEmployee = async (): Promise<void> => {
     if (!sp) {
       console.error('SP instance is not initialized');
       return;
     }
 
     try {
-      const dataToSave = { ...employeeData, title: employeeData.employeeName };
-      await sp.web.lists.getByTitle('EmployeeDetails').items.add(dataToSave);
+      await sp.web.lists.getByTitle('EmployeeDetails').items.add(employeeData);
       alert('Employee saved successfully!');
     } catch (error) {
       console.error('Error saving employee:', error);
@@ -102,22 +107,15 @@ const EmployeeManagement: React.FC<IEmployeeManagementProps> = ({ context }) => 
         value={employeeData.employeeId}
         onChange={handleInputChange}
       />
-
       <PeoplePicker
-        context={{
-          absoluteUrl: context.pageContext.web.absoluteUrl,
-          msGraphClientFactory: context.msGraphClientFactory,
-          spHttpClient: context.spHttpClient,
-        }}
-        titleText="Contact Info (Select Employee)"
+        context={context}
+        titleText="Contact Info"
         personSelectionLimit={1}
         principalTypes={[PrincipalType.User]}
         onChange={handlePeoplePicker}
       />
-
       <Dropdown
         label="Department"
-        placeholder="Select a department"
         options={departmentOptions}
         selectedKey={employeeData.department}
         onChange={(e, option) =>
@@ -129,7 +127,6 @@ const EmployeeManagement: React.FC<IEmployeeManagementProps> = ({ context }) => 
       />
       <Dropdown
         label="Designation"
-        placeholder="Select a designation"
         options={designationOptions}
         selectedKey={employeeData.designation}
         onChange={(e, option) =>
@@ -158,7 +155,6 @@ const EmployeeManagement: React.FC<IEmployeeManagementProps> = ({ context }) => 
         value={employeeData.address}
         onChange={handleInputChange}
       />
-
       <DatePicker
         label="Date of Joining"
         value={employeeData.dateOfJoining}
@@ -169,7 +165,6 @@ const EmployeeManagement: React.FC<IEmployeeManagementProps> = ({ context }) => 
           }))
         }
       />
-
       <PrimaryButton text="Save Employee" onClick={saveEmployee} />
     </div>
   );
